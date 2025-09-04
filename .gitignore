@@ -1,0 +1,22 @@
+# Ignore node modules everywhere
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-error.log*
+
+# Build artifacts
+build/
+dist/
+
+# Environment files
+.env
+*.env
+frontend/.env
+backend/.env
+
+# System/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
