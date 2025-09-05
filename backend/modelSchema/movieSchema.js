@@ -11,8 +11,10 @@ const movieSchema = new mongoose.Schema(
     trailer: { type: String },
   },
   {
-    collection: "movies",
+    // You can keep this, but it's not necessary if you follow the naming convention
+    collection: "movies", 
   }
 );
 
-module.exports = mongoose.model("movieSchema", movieSchema);
+// FIX: Change "movieSchema" to the singular name "Movie"
+module.exports = mongoose.model("Movie", movieSchema);
