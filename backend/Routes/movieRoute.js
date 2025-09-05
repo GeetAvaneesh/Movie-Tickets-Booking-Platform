@@ -1,23 +1,39 @@
 const express = require("express");
 const movieRoute = express.Router();
-// Renamed the imported model for clarity
-const MovieModel = require("../modelSchema/movieSchema"); 
+const MovieModel = require("../modelSchema/movieSchema");
 const mongoose = require("mongoose");
 
+// ... (other routes like POST, etc., are unchanged)
 movieRoute.post("/add-movie", (req, res) => {
-  MovieModel.create(req.body, (err, data) => {
-    if (err) return err;
-    else res.json(data);
-  });
+    MovieModel.create(req.body, (err, data) => {
+        if (err) return err;
+        else res.json(data);
+    });
 });
 
+
+// THIS IS THE MODIFIED ROUTE
 movieRoute.get("/", (req, res) => {
+  // Debug message 1: Check if the route is being hit
+  console.log("--- GET /movies route was hit at:", new Date().toLocaleTimeString());
+
   MovieModel.find((err, data) => {
-    if (err) return err;
-    else res.json(data);
+    // Debug message 2: Log whatever the database returns
+    console.log("Database find() error:", err);
+    console.log("Database find() data:", data);
+
+    if (err) {
+      console.error("Sending error response to client.");
+      return res.status(500).json(err); // Send a proper error response
+    } else {
+      console.log(`Found ${data.length} movies. Sending to client.`);
+      res.json(data);
+    }
   });
 });
 
+
+// ... (all your other routes like get-details, searchbyname, etc., are unchanged)
 movieRoute.get("/get-details/:id", (req, res) => {
   MovieModel.findById(mongoose.Types.ObjectId(req.params.id), (err, data) => {
     if (err) return err;
